@@ -34,7 +34,7 @@ func (r *repo) Save(logger *zap.Logger, listing *domain.Listings) (err error) {
 func (r *repo) FindAll(logger *zap.Logger, pageNum, pageSize int, args map[string]interface{}) (listings []domain.Listings, err error) {
 	offset := (pageNum - 1) * pageSize
 
-	if err = r.db.Preload("Users").Limit(pageSize).Offset(offset).Where(args).Find(&listings).Error; err != nil {
+	if err = r.db.Preload("Users").Limit(pageSize).Offset(offset).Where(args).Order("created_at DESC").Find(&listings).Error; err != nil {
 		logger.Error("failed to find listings", zap.Error(err))
 		return
 	}

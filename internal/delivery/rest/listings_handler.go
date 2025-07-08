@@ -61,9 +61,15 @@ func (h *listingHandler) GetAll(c *fiber.Ctx) (err error) {
 	return c.Status(fiber.StatusOK).JSON(resp)
 }
 
-func (h *listingHandler) Save(c *fiber.Ctx) (err error) {
+func (h *listingHandler) CreateListings(c *fiber.Ctx) (err error) {
 	req := dto.CreateListingsRequest{}
 	logger := c.UserContext().Value("logger").(*zap.Logger)
+
+	if c.Get("Content-Type") != "application/x-www-form-urlencoded" {
+		err = fiber.ErrUnsupportedMediaType
+		logger.Error("Invalid content type, expected application/x-www-form-urlencoded", zap.Error(err))
+		return
+	}
 
 	if err = c.BodyParser(&req); err != nil {
 		logger.Error("Failed to parse request body", zap.Error(err))

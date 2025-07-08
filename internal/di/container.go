@@ -4,6 +4,7 @@ import (
 	"go.uber.org/zap"
 
 	listingsService "github.com/iqbalnzls/backend-exercise/internal/app/usecase/listings"
+	publicApiService "github.com/iqbalnzls/backend-exercise/internal/app/usecase/public_api"
 	userService "github.com/iqbalnzls/backend-exercise/internal/app/usecase/users"
 	listingsRepository "github.com/iqbalnzls/backend-exercise/internal/infrastructure/repository/listings"
 	userRepository "github.com/iqbalnzls/backend-exercise/internal/infrastructure/repository/users"
@@ -13,11 +14,12 @@ import (
 )
 
 type Container struct {
-	Config         *config.Config
-	ListingService listingsService.Service
-	UserService    userService.Service
-	Validator      *validator.Validator
-	Logger         *zap.Logger
+	Config           *config.Config
+	ListingService   listingsService.Service
+	UserService      userService.Service
+	PublicApiService publicApiService.Service
+	Validator        *validator.Validator
+	Logger           *zap.Logger
 }
 
 func SetupContainer() *Container {
@@ -33,6 +35,7 @@ func SetupContainer() *Container {
 	//initialize the service
 	listingSvc := listingsService.NewService(listingRepo)
 	userSvc := userService.NewService(userRepo)
+	publicApiSvc := publicApiService.NewService(listingRepo, userRepo)
 
 	//initialize the validator
 	v := validator.NewValidator()
@@ -42,10 +45,11 @@ func SetupContainer() *Container {
 	defer logger.Sync()
 
 	return &Container{
-		Config:         cfg,
-		ListingService: listingSvc,
-		UserService:    userSvc,
-		Validator:      v,
-		Logger:         logger,
+		Config:           cfg,
+		ListingService:   listingSvc,
+		UserService:      userSvc,
+		PublicApiService: publicApiSvc,
+		Validator:        v,
+		Logger:           logger,
 	}
 }

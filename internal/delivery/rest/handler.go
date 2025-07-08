@@ -8,29 +8,38 @@ import (
 
 type (
 	ListingHandler interface {
-		Save(c *fiber.Ctx) error
+		CreateListings(c *fiber.Ctx) error
 		GetAll(c *fiber.Ctx) error
 	}
 
 	UserHandler interface {
-		Save(c *fiber.Ctx) error
+		CreateListings(c *fiber.Ctx) error
 		GetById(c *fiber.Ctx) error
 		GetAll(c *fiber.Ctx) error
+	}
+
+	PublicApiHandler interface {
+		GetAllListingsPublicApi(c *fiber.Ctx) error
+		CreateListingsPublicApi(c *fiber.Ctx) error
+		CreateUserPublicApi(c *fiber.Ctx) error
 	}
 )
 
 type Handler struct {
-	listingHandler ListingHandler
-	userHandler    UserHandler
+	listingHandler   ListingHandler
+	userHandler      UserHandler
+	publicApiHandler PublicApiHandler
 }
 
 func SetupHandler(container *di.Container) *Handler {
 	listing := NewListingHandler(container.ListingService, container.Validator)
 	user := NewUserHandler(container.UserService, container.Validator)
+	publicApi := NewPublicApiHandler(container.PublicApiService, container.Validator)
 
 	return &Handler{
-		listingHandler: listing,
-		userHandler:    user,
+		listingHandler:   listing,
+		userHandler:      user,
+		publicApiHandler: publicApi,
 	}
 
 }

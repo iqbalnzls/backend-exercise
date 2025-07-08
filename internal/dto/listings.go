@@ -4,7 +4,7 @@ import "github.com/iqbalnzls/backend-exercise/pkg/constant"
 
 type CreateListingsRequest struct {
 	UserId      int64                `form:"user_id" validate:"required"`
-	ListingType constant.ListingType `form:"listing_type" validate:"required,oneof=rent sale"` // Assuming these are the only valid types
+	ListingType constant.ListingType `form:"listing_type" validate:"required,oneof=rent sale"`
 	Price       int64                `form:"price" validate:"required"`
 }
 

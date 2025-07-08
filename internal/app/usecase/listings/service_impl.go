@@ -24,19 +24,16 @@ func NewService(listingsRepo listingsRepository.Repository) Service {
 
 func (s *service) Create(logger *zap.Logger, req *dto.CreateListingsRequest) (resp dto.CreateListingsResponse, err error) {
 	listings := toListings(req)
-
 	if err = s.listingsRepo.Save(logger, listings); err != nil {
 		return
 	}
 
 	resp = toCreateListingsResponse(listings)
-
 	return
 }
 
 func (s *service) GetAll(logger *zap.Logger, req *dto.GetAllListingsRequest) (resp []dto.GetAllListingsResponse, err error) {
 	args := map[string]interface{}{}
-
 	if !strutil.IsEmptyString(req.UserId) {
 		args = map[string]interface{}{
 			"user_id": req.UserId,
@@ -49,6 +46,5 @@ func (s *service) GetAll(logger *zap.Logger, req *dto.GetAllListingsRequest) (re
 	}
 
 	resp = toGetAllListingsResponses(listings)
-
 	return
 }

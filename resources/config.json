@@ -4,7 +4,7 @@
     "port" : 6000
   },
   "database" : {
-    "host" : "localhost",
+    "host" : "postgres",
     "username" : "backend_exercise_user",
     "password" : "backend_exercise_password",
     "port" : 5432,
@@ -12,6 +12,6 @@
     "schema": "backend_exercise",
     "maxIdleConnections": 5,
     "maxOpenConnections": 30,
-    "debugMode": false
+    "debugMode": true
   }
 }

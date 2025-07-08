@@ -24,13 +24,11 @@ func NewService(userRepo users.Repository) Service {
 
 func (s *service) Create(logger *zap.Logger, req *dto.CreateUsersRequest) (resp dto.CreateUsersResponse, err error) {
 	user := toUsers(req)
-
 	if err = s.userRepo.Save(logger, user); err != nil {
 		return
 	}
 
 	resp = toCreateUsersResponse(user)
-
 	return
 }
 
@@ -45,7 +43,6 @@ func (s *service) GetById(logger *zap.Logger, req *dto.GetByIdRequest) (resp dto
 	}
 
 	resp = toGetByIdResponse(&user)
-
 	return
 }
 
@@ -56,6 +53,5 @@ func (s *service) GetAll(logger *zap.Logger, req *dto.GetAllUsersRequest) (resp 
 	}
 
 	resp = toGetAllUsersResponse(usersData)
-
 	return
 }
