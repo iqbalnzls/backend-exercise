@@ -1,5 +1,4 @@
 # backend-exercise<br>
-***
 
 
 ## 🚀 Getting Started
