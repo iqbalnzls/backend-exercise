@@ -10,9 +10,9 @@
 
 2. Run Migrations
 
-   Once the containers are up, execute a SQL command inside a docker db container by executing:
+   Once the containers are up, run the following command to connect to the database:
    ```sh
-   docker exec -it backend_exercise_db psql -U backend_exercise_user -W backend_exercise
+   make migrate
    ```
    Then type the SQL command in migrations folder (init_schema.sql) to set up the database.
 
